@@ -38,6 +38,11 @@ class Concrete {
   final CopyWith copyWith;
   final bool shouldUseExtends;
 
+  bool get _hasGenericArgumentFactories =>
+      allConstructors.any((cons) => cons.decorators
+          .where((dec) => dec.startsWith('@JsonSerializable'))
+          .any((dec) => dec.contains('genericArgumentFactories: true')));
+
   String get concreteName {
     return '_\$${constructor.redirectedName}';
   }
@@ -154,12 +159,32 @@ ${copyWith.abstractCopyWithGetter}
 
   String get _redirectedFromJsonConstructor {
     if (!shouldGenerateJson) return '';
-    return 'factory ${constructor.redirectedName}.fromJson(Map<String, dynamic> json) = $concreteName$genericsParameter.fromJson;';
+
+    final genericArgs = _hasGenericArgumentFactories
+        ? genericsParameter.typeParameters.map((type) {
+            return ', $type Function(Object? json) fromJson$type';
+          }).join()
+        : '';
+
+    return 'factory ${constructor.redirectedName}.fromJson(Map<String, dynamic> json$genericArgs) = $concreteName$genericsParameter.fromJson;';
   }
 
   String get _concreteFromJsonConstructor {
     if (!shouldGenerateJson) return '';
-    return 'factory $concreteName.fromJson(Map<String, dynamic> json) => _\$${concreteName}FromJson(json);';
+
+    final genericArgs = _hasGenericArgumentFactories
+        ? genericsParameter.typeParameters.map((type) {
+            return ', $type Function(Object? json) fromJson$type';
+          }).join()
+        : '';
+
+    final genericArgsNames = _hasGenericArgumentFactories
+        ? genericsParameter.typeParameters
+            .map((type) => ', fromJson$type')
+            .join()
+        : '';
+
+    return 'factory $concreteName.fromJson(Map<String, dynamic> json$genericArgs) => _\$${concreteName}FromJson(json$genericArgsNames);';
   }
 
   String get _toJson {
@@ -169,10 +194,20 @@ ${copyWith.abstractCopyWithGetter}
         ? "..['$unionKey'] = '${constructor.isDefault ? 'default' : constructor.name}'"
         : '';
 
+    final genericArgs = _hasGenericArgumentFactories
+        ? genericsParameter.typeParameters.map((type) {
+            return 'Object Function($type value) toJson$type';
+          }).join(', ')
+        : '';
+
+    final genericArgsNames = _hasGenericArgumentFactories
+        ? genericsParameter.typeParameters.map((type) => ', toJson$type').join()
+        : '';
+
     return '''
 @override
-Map<String, dynamic> toJson() {
-  return _\$${concreteName}ToJson(this)$addRuntimeType;
+Map<String, dynamic> toJson($genericArgs) {
+  return _\$${concreteName}ToJson(this$genericArgsNames)$addRuntimeType;
 }''';
   }
 

@@ -234,6 +234,7 @@ Read here: https://github.com/rrousselGit/freezed/tree/master/packages/freezed#t
               _implementsDecorationTypes(constructor).toSet().toList(),
           isDefault: isDefaultConstructor(constructor),
           hasJsonSerializable: constructor.hasJsonSerializable,
+          // hasGenericArgumentFactories: constructor.hasGenericArgumentFactories,
           cloneableProperties: await _cloneableProperties(
             buildStep,
             element,
@@ -545,6 +546,15 @@ extension on Element {
       throwOnUnresolved: false,
     );
   }
+
+  /* TODO: Use this to check if class/constructor has genericArgumentFactories enabled
+  bool get hasGenericArgumentFactories {
+    if (!hasJsonSerializable) return false;
+    final annotation =
+        const TypeChecker.fromRuntime(JsonSerializable).firstAnnotationOf(this);
+    return annotation.getField('genericArgumentFactories').toBoolValue();
+  }
+  */
 }
 
 String parseLateGetterSource(String source) {
