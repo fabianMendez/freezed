@@ -659,6 +659,7 @@ class _$DataTearOff {
   _Data call(
       {@required String name,
       @required bool needsJsonSerializable,
+      @required bool hasGenericArgumentFactories,
       @required String unionKey,
       @required List<String> concretePropertiesName,
       @required List<ConstructorDetails> constructors,
@@ -668,6 +669,7 @@ class _$DataTearOff {
     return _Data(
       name: name,
       needsJsonSerializable: needsJsonSerializable,
+      hasGenericArgumentFactories: hasGenericArgumentFactories,
       unionKey: unionKey,
       concretePropertiesName: concretePropertiesName,
       constructors: constructors,
@@ -686,6 +688,7 @@ const $Data = _$DataTearOff();
 mixin _$Data {
   String get name;
   bool get needsJsonSerializable;
+  bool get hasGenericArgumentFactories;
   String get unionKey;
   List<String> get concretePropertiesName;
   List<ConstructorDetails> get constructors;
@@ -704,6 +707,7 @@ abstract class $DataCopyWith<$Res> {
   $Res call(
       {String name,
       bool needsJsonSerializable,
+      bool hasGenericArgumentFactories,
       String unionKey,
       List<String> concretePropertiesName,
       List<ConstructorDetails> constructors,
@@ -724,6 +728,7 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
   $Res call({
     Object name = freezed,
     Object needsJsonSerializable = freezed,
+    Object hasGenericArgumentFactories = freezed,
     Object unionKey = freezed,
     Object concretePropertiesName = freezed,
     Object constructors = freezed,
@@ -736,6 +741,9 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       needsJsonSerializable: needsJsonSerializable == freezed
           ? _value.needsJsonSerializable
           : needsJsonSerializable as bool,
+      hasGenericArgumentFactories: hasGenericArgumentFactories == freezed
+          ? _value.hasGenericArgumentFactories
+          : hasGenericArgumentFactories as bool,
       unionKey: unionKey == freezed ? _value.unionKey : unionKey as String,
       concretePropertiesName: concretePropertiesName == freezed
           ? _value.concretePropertiesName
@@ -764,6 +772,7 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
   $Res call(
       {String name,
       bool needsJsonSerializable,
+      bool hasGenericArgumentFactories,
       String unionKey,
       List<String> concretePropertiesName,
       List<ConstructorDetails> constructors,
@@ -785,6 +794,7 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
   $Res call({
     Object name = freezed,
     Object needsJsonSerializable = freezed,
+    Object hasGenericArgumentFactories = freezed,
     Object unionKey = freezed,
     Object concretePropertiesName = freezed,
     Object constructors = freezed,
@@ -797,6 +807,9 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       needsJsonSerializable: needsJsonSerializable == freezed
           ? _value.needsJsonSerializable
           : needsJsonSerializable as bool,
+      hasGenericArgumentFactories: hasGenericArgumentFactories == freezed
+          ? _value.hasGenericArgumentFactories
+          : hasGenericArgumentFactories as bool,
       unionKey: unionKey == freezed ? _value.unionKey : unionKey as String,
       concretePropertiesName: concretePropertiesName == freezed
           ? _value.concretePropertiesName
@@ -822,6 +835,7 @@ class _$_Data implements _Data {
   _$_Data(
       {@required this.name,
       @required this.needsJsonSerializable,
+      @required this.hasGenericArgumentFactories,
       @required this.unionKey,
       @required this.concretePropertiesName,
       @required this.constructors,
@@ -830,6 +844,7 @@ class _$_Data implements _Data {
       @required this.shouldUseExtends})
       : assert(name != null),
         assert(needsJsonSerializable != null),
+        assert(hasGenericArgumentFactories != null),
         assert(unionKey != null),
         assert(concretePropertiesName != null),
         assert(constructors != null),
@@ -843,6 +858,8 @@ class _$_Data implements _Data {
   final String name;
   @override
   final bool needsJsonSerializable;
+  @override
+  final bool hasGenericArgumentFactories;
   @override
   final String unionKey;
   @override
@@ -858,7 +875,7 @@ class _$_Data implements _Data {
 
   @override
   String toString() {
-    return 'Data(name: $name, needsJsonSerializable: $needsJsonSerializable, unionKey: $unionKey, concretePropertiesName: $concretePropertiesName, constructors: $constructors, genericsDefinitionTemplate: $genericsDefinitionTemplate, genericsParameterTemplate: $genericsParameterTemplate, shouldUseExtends: $shouldUseExtends)';
+    return 'Data(name: $name, needsJsonSerializable: $needsJsonSerializable, hasGenericArgumentFactories: $hasGenericArgumentFactories, unionKey: $unionKey, concretePropertiesName: $concretePropertiesName, constructors: $constructors, genericsDefinitionTemplate: $genericsDefinitionTemplate, genericsParameterTemplate: $genericsParameterTemplate, shouldUseExtends: $shouldUseExtends)';
   }
 
   @override
@@ -870,6 +887,11 @@ class _$_Data implements _Data {
             (identical(other.needsJsonSerializable, needsJsonSerializable) ||
                 const DeepCollectionEquality().equals(
                     other.needsJsonSerializable, needsJsonSerializable)) &&
+            (identical(other.hasGenericArgumentFactories,
+                    hasGenericArgumentFactories) ||
+                const DeepCollectionEquality().equals(
+                    other.hasGenericArgumentFactories,
+                    hasGenericArgumentFactories)) &&
             (identical(other.unionKey, unionKey) ||
                 const DeepCollectionEquality()
                     .equals(other.unionKey, unionKey)) &&
@@ -899,6 +921,7 @@ class _$_Data implements _Data {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(needsJsonSerializable) ^
+      const DeepCollectionEquality().hash(hasGenericArgumentFactories) ^
       const DeepCollectionEquality().hash(unionKey) ^
       const DeepCollectionEquality().hash(concretePropertiesName) ^
       const DeepCollectionEquality().hash(constructors) ^
@@ -916,6 +939,7 @@ abstract class _Data implements Data {
   factory _Data(
       {@required String name,
       @required bool needsJsonSerializable,
+      @required bool hasGenericArgumentFactories,
       @required String unionKey,
       @required List<String> concretePropertiesName,
       @required List<ConstructorDetails> constructors,
@@ -927,6 +951,8 @@ abstract class _Data implements Data {
   String get name;
   @override
   bool get needsJsonSerializable;
+  @override
+  bool get hasGenericArgumentFactories;
   @override
   String get unionKey;
   @override

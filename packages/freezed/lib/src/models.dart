@@ -61,6 +61,7 @@ abstract class Data with _$Data {
   factory Data({
     @required String name,
     @required bool needsJsonSerializable,
+    @required bool hasGenericArgumentFactories,
     @required String unionKey,
     @required List<String> concretePropertiesName,
     @required List<ConstructorDetails> constructors,
