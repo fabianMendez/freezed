@@ -24,6 +24,7 @@ class Concrete {
     @required this.unionKey,
     @required this.copyWith,
     @required this.shouldUseExtends,
+    @required this.hasGenericArgumentFactories,
   });
 
   final ConstructorDetails constructor;
@@ -37,11 +38,7 @@ class Concrete {
   final String unionKey;
   final CopyWith copyWith;
   final bool shouldUseExtends;
-
-  bool get _hasGenericArgumentFactories =>
-      allConstructors.any((cons) => cons.decorators
-          .where((dec) => dec.startsWith('@JsonSerializable'))
-          .any((dec) => dec.contains('genericArgumentFactories: true')));
+  final bool hasGenericArgumentFactories;
 
   String get concreteName {
     return '_\$${constructor.redirectedName}';
@@ -160,7 +157,7 @@ ${copyWith.abstractCopyWithGetter}
   String get _redirectedFromJsonConstructor {
     if (!shouldGenerateJson) return '';
 
-    final genericArgs = _hasGenericArgumentFactories
+    final genericArgs = hasGenericArgumentFactories
         ? genericsParameter.typeParameters.map((type) {
             return ', $type Function(Object? json) fromJson$type';
           }).join()
@@ -172,13 +169,13 @@ ${copyWith.abstractCopyWithGetter}
   String get _concreteFromJsonConstructor {
     if (!shouldGenerateJson) return '';
 
-    final genericArgs = _hasGenericArgumentFactories
+    final genericArgs = hasGenericArgumentFactories
         ? genericsParameter.typeParameters.map((type) {
             return ', $type Function(Object? json) fromJson$type';
           }).join()
         : '';
 
-    final genericArgsNames = _hasGenericArgumentFactories
+    final genericArgsNames = hasGenericArgumentFactories
         ? genericsParameter.typeParameters
             .map((type) => ', fromJson$type')
             .join()
@@ -194,13 +191,13 @@ ${copyWith.abstractCopyWithGetter}
         ? "..['$unionKey'] = '${constructor.isDefault ? 'default' : constructor.name}'"
         : '';
 
-    final genericArgs = _hasGenericArgumentFactories
+    final genericArgs = hasGenericArgumentFactories
         ? genericsParameter.typeParameters.map((type) {
             return 'Object Function($type value) toJson$type';
           }).join(', ')
         : '';
 
-    final genericArgsNames = _hasGenericArgumentFactories
+    final genericArgsNames = hasGenericArgumentFactories
         ? genericsParameter.typeParameters.map((type) => ', toJson$type').join()
         : '';
 
