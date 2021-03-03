@@ -73,6 +73,7 @@ See [the example](https://github.com/rrousselGit/freezed/blob/master/packages/fr
     - [Map/MaybeMap](#mapmaybemap)
   - [FromJson/ToJson](#fromjsontojson)
     - [fromJSON - classes with multiple constructors](#fromjson---classes-with-multiple-constructors)
+    - [classes with generic argument factories](#classes-with-generic-argument-factories)
 - [Utilities](#utilities)
 
 # How to use
