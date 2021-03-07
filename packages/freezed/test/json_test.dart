@@ -137,20 +137,20 @@ Future<void> main() async {
     group('with argument factories', () {
       test('fromJson', () {
         expect(
-          GenericWithArgumentFactories.fromJson(
+          GenericWithArgumentFactories<GenericValue>.fromJson(
             <String, Object>{
               'value': <String, dynamic>{'value': 24},
               'value2': 'abc',
             },
             (json) => GenericValue.fromJson(json as Map<String, dynamic>),
           ),
-          GenericWithArgumentFactories(GenericValue(24), 'abc'),
+          GenericWithArgumentFactories<GenericValue>(GenericValue(24), 'abc'),
         );
       });
 
       test('fromJson with default value for null json', () {
         expect(
-          GenericWithArgumentFactories.fromJson(
+          GenericWithArgumentFactories<GenericValue>.fromJson(
             <String, Object>{
               'value2': 'abc',
             },
@@ -158,13 +158,13 @@ Future<void> main() async {
                 ? GenericValue.fromJson(json)
                 : GenericValue(51),
           ),
-          GenericWithArgumentFactories(GenericValue(51), 'abc'),
+          GenericWithArgumentFactories<GenericValue>(GenericValue(51), 'abc'),
         );
       });
 
       test('toJson', () {
         expect(
-          GenericWithArgumentFactories(GenericValue(24), 'abc')
+          GenericWithArgumentFactories<GenericValue>(GenericValue(24), 'abc')
               .toJson((value) => value.toJson()),
           <String, Object>{
             'value': <String, dynamic>{'value': 24},
@@ -175,7 +175,7 @@ Future<void> main() async {
 
       test('tuple fromJson', () {
         expect(
-          GenericTupleWithArgumentFactories.fromJson(
+          GenericTupleWithArgumentFactories<int, String>.fromJson(
             <String, Object>{
               'value1': 1,
               'value2': 'value 2',
@@ -184,13 +184,13 @@ Future<void> main() async {
             (json) => json as int,
             (json) => json as String,
           ),
-          GenericTupleWithArgumentFactories(1, 'value 2', 'hola'),
+          GenericTupleWithArgumentFactories<int, String>(1, 'value 2', 'hola'),
         );
       });
 
       test('tuple toJson', () {
         expect(
-          GenericTupleWithArgumentFactories(1, 'value 2', 'hola')
+          GenericTupleWithArgumentFactories<int, String>(1, 'value 2', 'hola')
               .toJson((value) => value, (value) => value),
           <String, Object>{
             'value1': 1,
@@ -202,7 +202,7 @@ Future<void> main() async {
 
       test('multi ctor default fromJson', () {
         expect(
-          GenericMultiCtorWithArgumentFactories.fromJson(
+          GenericMultiCtorWithArgumentFactories<int, String>.fromJson(
             <String, Object>{
               'runtimeType': 'default',
               'first': 1,
@@ -212,13 +212,15 @@ Future<void> main() async {
             (json) => json as int,
             (json) => json as String,
           ),
-          GenericMultiCtorWithArgumentFactories(1, 'value 2', 'hola'),
+          GenericMultiCtorWithArgumentFactories<int, String>(
+              1, 'value 2', 'hola'),
         );
       });
 
       test('multi ctor default toJson', () {
         expect(
-          GenericMultiCtorWithArgumentFactories(1, 'value 2', 'hola')
+          GenericMultiCtorWithArgumentFactories<int, String>(
+                  1, 'value 2', 'hola')
               .toJson((value) => value, (value) => value),
           <String, Object>{
             'runtimeType': 'default',
@@ -231,7 +233,7 @@ Future<void> main() async {
 
       test('multi ctor non-default fromJson', () {
         expect(
-          GenericMultiCtorWithArgumentFactories.fromJson(
+          GenericMultiCtorWithArgumentFactories<int, String>.fromJson(
             <String, Object>{
               'runtimeType': 'first',
               'first': 1,
